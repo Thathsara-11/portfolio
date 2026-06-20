@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Thathsara - Portfolio | Undergraduate in Applied Physical Sciences specializing in Mathematics, Computer Science, and Statistics. Skilled in data analysis, system development, and management solutions.">
+    <meta name="keywords"
+        content="Thathsara, Portfolio, Applied Physical Sciences, Data Analyst, Computer Science, Mathematics, Statistics">
+    <meta name="author" content="Thathsara">
+    <title>Thathsara | Portfolio - Applied Physical Sciences</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Cursor Glow -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Particle Canvas -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <span class="logo-first">Thathsara</span> <span class="logo-last">Nilnayana</span>
+            </a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#education" class="nav-link">Education</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#certifications" class="nav-link">Certifications</a></li>
+                <li><a href="#leadership" class="nav-link">Activities</a></li>
+                <li><a href="#blog" class="nav-link">Blog</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section id="home" class="hero-section">
+        <div class="hero-bg-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge animate-on-scroll">
+                    <span class="badge-dot"></span>
+                    Available for Opportunities
+                </div>
+                <h1 class="hero-title animate-on-scroll">
+                    Hello, I'm <span class="gradient-text">Thathsara Nilnayana</span>
+                </h1>
+                <h2 class="hero-subtitle animate-on-scroll">
+                    <span class="typewriter" id="typewriter"></span>
+                    <span class="typewriter-cursor">|</span>
+                </h2>
+                <p class="hero-description animate-on-scroll">
+                    Detail-oriented and analytical undergraduate in Applied Physical Sciences with expertise in
+                    <span class="highlight">Mathematics</span>, <span class="highlight">Computer Science</span>, and
+                    <span class="highlight">Statistics</span>. Passionate about data-driven solutions and process
+                    optimization.
+                </p>
+                <div class="hero-buttons animate-on-scroll">
+                    <a href="#projects" class="btn btn-primary">
+                        <i class="fas fa-rocket"></i> View My Work
+                    </a>
+                    <a href="#contact" class="btn btn-outline">
+                        <i class="fas fa-paper-plane"></i> Contact Me
+                    </a>
+                </div>
+                <div class="hero-stats animate-on-scroll">
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="3">0</span><span class="stat-plus">+</span>
+                        <span class="stat-label">Projects</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="2">0</span>
+                        <span class="stat-label">Certifications</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number" data-count="3">0</span>
+                        <span class="stat-label">Specializations</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual animate-on-scroll">
+                <div class="profile-ring">
+                    <div class="ring ring-outer"></div>
+                    <div class="ring ring-inner"></div>
+                    <div class="profile-image">
+                        <img src="profile.jpg" alt="Thathsara Nilnayana" class="profile-photo">
+                    </div>
+                </div>
+                <div class="floating-card card-1">
+                    <i class="fas fa-code"></i>
+                    <span>Developer</span>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analyst</span>
+                </div>
+                <div class="floating-card card-3">
+                    <i class="fas fa-brain"></i>
+                    <span>ML/AI</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="mouse-wheel"></div>
+            </div>
+            <span>Scroll Down</span>
+        </div>
+    </section>
+
+    <!-- ===== ABOUT SECTION ===== -->
+    <section id="about" class="section about-section">
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag"><i class="fas fa-user"></i> Get To Know</span>
+                <h2 class="section-title">About <span class="gradient-text">Me</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="about-grid">
+                <div class="about-left animate-on-scroll">
+                    <div class="about-image-wrapper">
+                        <div class="about-image">
+                            <img src="profile.jpg" alt="Thathsara Nilnayana" class="about-photo">
+                        </div>
+                        <div class="about-experience-badge">
+                            <span class="exp-number">3+</span>
+                            <span class="exp-text">Years of<br>Academic Excellence</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-right animate-on-scroll">
+                    <div class="about-cards">
+                        <div class="about-card">
+                            <i class="fas fa-graduation-cap"></i>
+                            <h3>Education</h3>
+                            <p>Applied Physical Sciences undergraduate at Rajarata University of Sri Lanka</p>
+                        </div>
+                        <div class="about-card">
+                            <i class="fas fa-project-diagram"></i>
+                            <h3>Projects</h3>
+                            <p>3+ completed projects including AI-based systems and web applications</p>
+                        </div>
+                        <div class="about-card">
+                            <i class="fas fa-certificate"></i>
+                            <h3>Certified</h3>
+                            <p>Hardware & Networking, Leadership Development certifications</p>
+                        </div>
+                    </div>
+                    <div class="about-text">
+                        <p>Detail-oriented and analytical undergraduate in <strong>Applied Physical Sciences</strong>
+                            with hands-on experience in data analysis, system development, and management solutions.
+                            Proficient in <strong>Mathematics, Computer Science, and Statistics</strong> with
+                            demonstrated expertise through academic and technical projects including management system
+                            development.</p>
+                        <p>Skilled in requirements analysis, problem-solving, and process optimization. Seeking to
+                            leverage strong analytical and technical foundation to contribute to <strong>data-driven
+                                solutions</strong> and support organizational process improvements.</p>
+                    </div>
+                    <div class="about-info">
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+9470 324 16 24</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>asp2022141@as.rjt.ac.lk</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>41, Panagama Dela, Rathnapura</span>
+                        </div>
+                        <a href="https://www.linkedin.com/in/thathsara-nilnayana-566838331/" target="_blank"
+                            class="info-item">
+                            <i class="fab fa-linkedin"></i>
+                            <span>LinkedIn Profile</span>
+                        </a>
+                    </div>
+                    <a href="#contact" class="btn btn-primary">
+                        <i class="fas fa-handshake"></i> Let's Connect
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== EDUCATION SECTION ===== -->
+    <section id="education" class="section education-section">
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag"><i class="fas fa-graduation-cap"></i> Academic Journey</span>
+                <h2 class="section-title">My <span class="gradient-text">Education</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="education-timeline">
+                <div class="timeline-line"></div>
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-dot">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-badge">2022 - Present</div>
+                        <h3>Bachelor of Science in Applied Physical Sciences</h3>
+                        <h4><i class="fas fa-map-marker-alt"></i> Rajarata University of Sri Lanka</h4>
+                        <p>Specializing in Mathematics, Computer Science, and Statistics. Developing strong analytical
+                            and technical foundations through comprehensive coursework and practical projects.</p>
+                        <div class="timeline-tags">
+                            <span>Mathematics</span>
+                            <span>Computer Science</span>
+                            <span>Statistics</span>
+                        </div>
+                        <div class="edu-highlights">
+                            <div class="edu-highlight-item">
+                                <i class="fas fa-star"></i>
+                                <span>Multi-disciplinary specialization combining three core analytical fields</span>
+                            </div>
+                            <div class="edu-highlight-item">
+                                <i class="fas fa-star"></i>
+                                <span>Hands-on project experience in AI/ML and web development</span>
+                            </div>
+                            <div class="edu-highlight-item">
+                                <i class="fas fa-star"></i>
+                                <span>Active member of Industrial Mathematics Association (IMSA)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item animate-on-scroll">
+                    <div class="timeline-dot">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-badge">2023</div>
+                        <h3>Certificate in Computer Hardware & Networking</h3>
+                        <h4><i class="fas fa-building"></i> Industrial Development Board of Ceylon</h4>
+                        <p>Comprehensive training on computer hardware components, network infrastructure, and system
+                            configuration under the Ministry of Industries.</p>
+                        <div class="timeline-tags">
+                            <span>Hardware</span>
+                            <span>Networking</span>
+                            <span>System Config</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SKILLS SECTION ===== -->
+    <section id="skills" class="section skills-section">
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag"><i class="fas fa-cogs"></i> What I Know</span>
+                <h2 class="section-title">My <span class="gradient-text">Skills</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="skills-grid">
+                <!-- Technical Skills -->
+                <div class="skills-column animate-on-scroll">
+                    <h3 class="skills-category-title">
+                        <i class="fas fa-laptop-code"></i> Technical Skills
+                    </h3>
+                    <div class="skill-bars">
+                        <div class="skill-bar-item">
+                            <div class="skill-bar-header">
+                                <span class="skill-name"><i class="fab fa-python"></i> Python</span>
+                                <span class="skill-percent">90%</span>
+                            </div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar-item">
+                            <div class="skill-bar-header">
+                                <span class="skill-name"><i class="fas fa-code"></i> C++</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" data-width="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar-item">
+                            <div class="skill-bar-header">
+                                <span class="skill-name"><i class="fab fa-js-square"></i> JavaScript/HTML/CSS</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" data-width="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar-item">
+                            <div class="skill-bar-header">
+                                <span class="skill-name"><i class="fas fa-database"></i> MySQL/Database</span>
+                                <span class="skill-percent">75%</span>
+                            </div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" data-width="75"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar-item">
+                            <div class="skill-bar-header">
+                                <span class="skill-name"><i class="fas fa-robot"></i> Machine Learning</span>
+                                <span class="skill-percent">75%</span>
+                            </div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" data-width="75"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar-item">
+                            <div class="skill-bar-header">
+                                <span class="skill-name"><i class="fas fa-paint-brush"></i> Web Design</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" data-width="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar-item">
+                            <div class="skill-bar-header">
+                                <span class="skill-name"><i class="fas fa-calculator"></i> MATLAB</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" data-width="80"></div>
+                            </div>
+                        </div>
+                        <div class="skill-bar-item">
+                            <div class="skill-bar-header">
+                                <span class="skill-name"><i class="fas fa-chart-bar"></i> R Programming</span>
+                                <span class="skill-percent">70%</span>
+                            </div>
+                            <div class="skill-bar-track">
+                                <div class="skill-bar-fill" data-width="70"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Professional Skills -->
+                <div class="skills-column animate-on-scroll">
+                    <h3 class="skills-category-title">
+                        <i class="fas fa-user-tie"></i> Professional Skills
+                    </h3>
+                    <div class="professional-skills">
+                        <div class="pro-skill-card">
+                            <div class="pro-skill-icon"><i class="fas fa-clipboard-list"></i></div>
+                            <h4>Requirements Gathering & Analysis</h4>
+                        </div>
+                        <div class="pro-skill-card">
+                            <div class="pro-skill-icon"><i class="fas fa-chart-pie"></i></div>
+                            <h4>Data Analysis & Visualization</h4>
+                        </div>
+                        <div class="pro-skill-card">
+                            <div class="pro-skill-icon"><i class="fas fa-lightbulb"></i></div>
+                            <h4>Problem Solving & Critical Thinking</h4>
+                        </div>
+                        <div class="pro-skill-card">
+                            <div class="pro-skill-icon"><i class="fas fa-users"></i></div>
+                            <h4>Team Collaboration</h4>
+                        </div>
+                        <div class="pro-skill-card">
+                            <div class="pro-skill-icon"><i class="fas fa-file-alt"></i></div>
+                            <h4>Documentation & Reporting</h4>
+                        </div>
+                        <div class="pro-skill-card">
+                            <div class="pro-skill-icon"><i class="fas fa-comments"></i></div>
+                            <h4>Stakeholder Communication</h4>
+                        </div>
+                        <div class="pro-skill-card">
+                            <div class="pro-skill-icon"><i class="fas fa-sitemap"></i></div>
+                            <h4>System Design</h4>
+                        </div>
+                        <div class="pro-skill-card">
+                            <div class="pro-skill-icon"><i class="fas fa-tasks"></i></div>
+                            <h4>Project Management</h4>
+                        </div>
+                    </div>
+                    <h3 class="skills-category-title" style="margin-top: 2rem;">
+                        <i class="fas fa-tools"></i> Tools & Technologies
+                    </h3>
+                    <div class="tools-grid">
+                        <div class="tool-tag"><i class="fas fa-brain"></i> AI/Deep Learning</div>
+                        <div class="tool-tag"><i class="fas fa-chart-line"></i> Regression Analysis</div>
+                        <div class="tool-tag"><i class="fas fa-wave-square"></i> Time-Series Analysis</div>
+                        <div class="tool-tag"><i class="fab fa-git-alt"></i> Git/GitHub</div>
+                        <div class="tool-tag"><i class="fab fa-html5"></i> HTML5/CSS3</div>
+                        <div class="tool-tag"><i class="fas fa-server"></i> Database Design</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS SECTION ===== -->
+    <section id="projects" class="section projects-section">
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag"><i class="fas fa-code-branch"></i> My Work</span>
+                <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-image">
+                        <div class="project-img-placeholder gradient-bg-1">
+                            <i class="fas fa-pills"></i>
+                        </div>
+                        <div class="project-overlay">
+                            <span class="project-status in-progress">
+                                <i class="fas fa-spinner"></i> In Progress
+                            </span>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>AI-Based Medicine Demand Prediction</h3>
+                        <p>Developing a machine learning-based predictive system using Linear Regression and ARIMA
+                            models to forecast monthly medicine demand for local pharmacies, analyzing 1-3 years of
+                            historical sales data.</p>
+                        <div class="project-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>ML-based demand forecasting with ARIMA models</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Web/mobile app for pharmacists with demand graphs</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Seasonal disease pattern analysis</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Team of 5 members - Full-stack development</span>
+                            </div>
+                        </div>
+                        <div class="project-tags">
+                            <span>Python</span>
+                            <span>Machine Learning</span>
+                            <span>ARIMA</span>
+                            <span>Data Analysis</span>
+                            <span>Full-Stack</span>
+                        </div>
+                        <div class="project-links">
+                            <span class="project-team"><i class="fas fa-users"></i> Team Project - Rajarata
+                                University</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-image">
+                        <div class="project-img-placeholder gradient-bg-2">
+                            <i class="fas fa-futbol"></i>
+                        </div>
+                        <div class="project-overlay">
+                            <span class="project-status completed">
+                                <i class="fas fa-check"></i> Completed
+                            </span>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>Responsive Sports Club Website</h3>
+                        <p>Designed and developed a responsive sports club website using HTML5, CSS3, and JavaScript
+                            with modern UI design, interactive components, and animations for enhanced user experience.
+                        </p>
+                        <div class="project-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Responsive layouts with CSS Flexbox and Grid</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Interactive sliders, modals, and dropdowns</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Event registration and member profiles</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Contact forms with validation</span>
+                            </div>
+                        </div>
+                        <div class="project-tags">
+                            <span>HTML5</span>
+                            <span>CSS3</span>
+                            <span>JavaScript</span>
+                            <span>Responsive</span>
+                            <span>UI/UX</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/Thathsara-11/Web_project" target="_blank" class="btn btn-sm">
+                                <i class="fab fa-github"></i> View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card animate-on-scroll">
+                    <div class="project-image">
+                        <div class="project-img-placeholder gradient-bg-3">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="project-overlay">
+                            <span class="project-status completed">
+                                <i class="fas fa-check"></i> Completed
+                            </span>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <h3>Restaurant Management System</h3>
+                        <p>Initially developed in C++ for OOP subject, then converted into a full-featured mobile
+                            application. Implemented core functionality using Object-Oriented Programming principles
+                            including classes, inheritance, and encapsulation.</p>
+                        <div class="project-features">
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>C++ to Mobile Application conversion</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>OOP principles: classes, inheritance, encapsulation</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>User-friendly interface with responsive design</span>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Real-time data processing & management</span>
+                            </div>
+                        </div>
+                        <div class="project-tags">
+                            <span>C++</span>
+                            <span>OOP</span>
+                            <span>Mobile App</span>
+                            <span>Database</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/Thathsara-11/Restaurant_Management_System-" target="_blank"
+                                class="btn btn-sm">
+                                <i class="fab fa-github"></i> View on GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CERTIFICATIONS SECTION ===== -->
+    <section id="certifications" class="section certifications-section">
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag"><i class="fas fa-award"></i> Achievements</span>
+                <h2 class="section-title">My <span class="gradient-text">Certifications</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="cert-grid">
+                <div class="cert-card animate-on-scroll">
+                    <div class="cert-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="cert-number">01</div>
+                    <h3>Certificate in Computer Hardware & Networking</h3>
+                    <h4><i class="fas fa-building"></i> Industrial Development Board of Ceylon</h4>
+                    <p class="cert-org">Ministry of Industries</p>
+                    <p>Completed comprehensive training on computer hardware components, network infrastructure, and
+                        system configuration.</p>
+                    <div class="cert-badge">
+                        <i class="fas fa-id-card"></i> Certificate No: NSD/2304/B370
+                    </div>
+                </div>
+                <div class="cert-card animate-on-scroll">
+                    <div class="cert-icon">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <div class="cert-number">02</div>
+                    <h3>Leadership Development Training Program - Level 01</h3>
+                    <h4><i class="fas fa-university"></i> Academy of Adventure, Rajarata University</h4>
+                    <p class="cert-org">Team Endeavour</p>
+                    <p>Completed intensive leadership training focused on teamwork, communication, self-confidence,
+                        commitment, and initiative.</p>
+                    <div class="cert-badge">
+                        <i class="fas fa-map-marker-alt"></i> AOA Base Camp, Kumbalgama, Belifuloya | January 2026
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== LEADERSHIP SECTION ===== -->
+    <section id="leadership" class="section leadership-section">
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag"><i class="fas fa-users"></i> Beyond Academics</span>
+                <h2 class="section-title">Leadership & <span class="gradient-text">Activities</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="leadership-grid">
+                <div class="leadership-card animate-on-scroll">
+                    <div class="lead-icon-wrap">
+                        <i class="fas fa-calculator"></i>
+                    </div>
+                    <h3>Industrial Mathematics Association (IMSA)</h3>
+                    <h4>Rajarata University of Sri Lanka</h4>
+                    <span class="lead-role"><i class="fas fa-user-tag"></i> Member</span>
+                    <p>Active member of the Industrial Mathematics Association, engaging in mathematical research
+                        discussions, workshops, and collaborative problem-solving activities that bridge theoretical
+                        mathematics with industrial applications.</p>
+                </div>
+                <div class="leadership-card animate-on-scroll">
+                    <div class="lead-icon-wrap">
+                        <i class="fas fa-volleyball-ball"></i>
+                    </div>
+                    <h3>Sports & Team Activities</h3>
+                    <h4>University & Community Level</h4>
+                    <span class="lead-role"><i class="fas fa-user-tag"></i> Active Participant</span>
+                    <p>Actively participated in various sports and team activities, developing essential teamwork,
+                        communication, and leadership skills. These experiences strengthened collaborative abilities and
+                        resilience.</p>
+                </div>
+                <div class="leadership-card animate-on-scroll">
+                    <div class="lead-icon-wrap">
+                        <i class="fas fa-campground"></i>
+                    </div>
+                    <h3>Team Endeavour - Leadership Program</h3>
+                    <h4>Academy of Adventure</h4>
+                    <span class="lead-role"><i class="fas fa-user-tag"></i> Trainee</span>
+                    <p>Completed Level 01 leadership training at AOA Base Camp, Belifuloya. Developed critical
+                        leadership competencies including team management, decision-making under pressure, and effective
+                        communication.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BLOG SECTION ===== -->
+    <section id="blog" class="section blog-section">
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag"><i class="fas fa-pen-fancy"></i> My Writings</span>
+                <h2 class="section-title">Latest <span class="gradient-text">Blog Posts</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="blog-grid">
+                <!-- Blog 1 - Computer Science -->
+                <article class="blog-card animate-on-scroll">
+                    <div class="blog-image">
+                        <div class="blog-img-placeholder blog-gradient-1">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="blog-category">Computer Science</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> June 19, 2026</span>
+                            <span><i class="fas fa-clock"></i> 3 min read</span>
+                        </div>
+                        <h3>The Power of Computer Science: Building the Foundation for Modern Technology</h3>
+                        <p>Computer Science forms the core of my academic journey. Through courses spanning from
+                            foundational concepts to advanced applications, I've developed comprehensive expertise in
+                            software development and system design, including OOP, Web Design, and Database Management.
+                        </p>
+                        <div class="blog-tags">
+                            <span>Programming</span>
+                            <span>Web Design</span>
+                            <span>Software Engineering</span>
+                        </div>
+                        <a href="#" class="blog-read-more" data-blog-id="cs">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Blog 2 - Mathematics -->
+                <article class="blog-card animate-on-scroll">
+                    <div class="blog-image">
+                        <div class="blog-img-placeholder blog-gradient-2">
+                            <i class="fas fa-square-root-alt"></i>
+                        </div>
+                        <div class="blog-category">Mathematics</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> June 18, 2026</span>
+                            <span><i class="fas fa-clock"></i> 3 min read</span>
+                        </div>
+                        <h3>Mathematics: The Language of Problem-Solving and Computational Thinking</h3>
+                        <p>Mathematics is the backbone of analytical and computational thinking. My studies cover Real
+                            Analysis, Linear Algebra, Differential Equations, and MATLAB programming, enabling me to
+                            solve complex problems through mathematical modeling and optimization.</p>
+                        <div class="blog-tags">
+                            <span>Data Analysis</span>
+                            <span>MATLAB</span>
+                            <span>Optimization</span>
+                        </div>
+                        <a href="#" class="blog-read-more" data-blog-id="math">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Blog 3 - Statistics -->
+                <article class="blog-card animate-on-scroll">
+                    <div class="blog-image">
+                        <div class="blog-img-placeholder blog-gradient-3">
+                            <i class="fas fa-chart-area"></i>
+                        </div>
+                        <div class="blog-category">Statistics & Data Science</div>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> June 15, 2026</span>
+                            <span><i class="fas fa-clock"></i> 3 min read</span>
+                        </div>
+                        <h3>Statistics: Turning Data Into Insights for Data-Driven Decision Making</h3>
+                        <p>From Probability Theory and Regression Analysis to Statistical Learning and Python/R
+                            Programming, I've developed the skills to analyze datasets, build predictive models, and
+                            extract actionable insights for evidence-based decision-making.</p>
+                        <div class="blog-tags">
+                            <span>Data Science</span>
+                            <span>Python</span>
+                            <span>Machine Learning</span>
+                        </div>
+                        <a href="#" class="blog-read-more" data-blog-id="stats">
+                            Read More <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT SECTION ===== -->
+    <section id="contact" class="section contact-section">
+        <div class="section-container">
+            <div class="section-header animate-on-scroll">
+                <span class="section-tag"><i class="fas fa-envelope"></i> Reach Out</span>
+                <h2 class="section-title">Get In <span class="gradient-text">Touch</span></h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-info-col animate-on-scroll">
+                    <h3>Let's work together!</h3>
+                    <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your
+                        vision.</p>
+                    <div class="contact-cards">
+                        <div class="contact-info-card">
+                            <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                            <div>
+                                <h4>Phone</h4>
+                                <p>+9470 324 16 24</p>
+                            </div>
+                        </div>
+                        <div class="contact-info-card">
+                            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <h4>Email</h4>
+                                <p>asp2022141@as.rjt.ac.lk</p>
+                            </div>
+                        </div>
+                        <div class="contact-info-card">
+                            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <h4>Location</h4>
+                                <p>41, Panagama Dela, Rathnapura</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://github.com/Thathsara-11" target="_blank" class="social-link"
+                            aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/thathsara-nilnayana-566838331/" target="_blank"
+                            class="social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="mailto:asp2022141@as.rjt.ac.lk" class="social-link" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="contact-form-col animate-on-scroll">
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="name" name="name" placeholder="Your full name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" name="email" placeholder="your.email@example.com"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-tag"></i>
+                                <input type="text" id="subject" name="subject" placeholder="What's this about?"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <div class="input-wrapper textarea-wrapper">
+                                <i class="fas fa-comment-dots"></i>
+                                <textarea id="message" name="message" rows="5"
+                                    placeholder="Tell me about your project..." required></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-submit" id="submitBtn">
+                            <span class="btn-text"><i class="fas fa-paper-plane"></i> Send Message</span>
+                            <span class="btn-loading"><i class="fas fa-circle-notch fa-spin"></i> Sending...</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#home" class="nav-logo">
+                        <span class="logo-first">Thathsara</span> <span class="logo-last">Nilnayana</span>
+                    </a>
+                    <p>Analytical undergraduate passionate about data-driven solutions and process optimization.</p>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Quick Links</h4>
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="footer-links-group">
+                    <h4>Connect</h4>
+                    <a href="https://github.com/Thathsara-11" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                    <a href="https://www.linkedin.com/in/thathsara-nilnayana-566838331/" target="_blank"><i
+                            class="fab fa-linkedin"></i> LinkedIn</a>
+                    <a href="mailto:asp2022141@as.rjt.ac.lk"><i class="fas fa-envelope"></i> Email</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Thathsara. All Rights Reserved. Built with <i class="fas fa-heart"
+                        style="color: #ff6b6b;"></i> and passion.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- ===== BLOG MODAL ===== -->
+    <div id="blogModal" class="blog-modal">
+        <div class="blog-modal-overlay" id="blogModalOverlay"></div>
+        <div class="blog-modal-content">
+            <button class="blog-modal-close" id="blogModalClose" aria-label="Close modal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="blog-modal-header">
+                <span class="blog-modal-category" id="blogModalCategory"></span>
+                <h2 class="blog-modal-title" id="blogModalTitle"></h2>
+                <div class="blog-modal-meta">
+                    <span><i class="fas fa-calendar"></i> <span id="blogModalDate"></span></span>
+                    <span><i class="fas fa-clock"></i> <span id="blogModalReadTime"></span></span>
+                </div>
+            </div>
+            <div class="blog-modal-body" id="blogModalBody">
+                <!-- content populated by JS -->
+            </div>
+            <div class="blog-modal-footer">
+                <div class="blog-modal-section">
+                    <h4>Skills Developed</h4>
+                    <div class="blog-modal-skills" id="blogModalSkills">
+                        <!-- tags populated by JS -->
+                    </div>
+                </div>
+                <div class="blog-modal-section">
+                    <h4>Tags</h4>
+                    <div class="blog-modal-tags" id="blogModalTags">
+                        <!-- tags populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
