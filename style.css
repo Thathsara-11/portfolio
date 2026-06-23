@@ -598,6 +598,23 @@ ul {
     font-weight: 300;
 }
 
+.typewriter-cursor.stop-blinking {
+    animation: none;
+    opacity: 0;
+}
+
+.typewriter {
+    font-weight: 500;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+.scramble-char {
+    color: var(--accent-cyan);
+    text-shadow: 0 0 8px rgba(34, 211, 238, 0.6);
+    font-weight: 600;
+}
+
 .hero-description {
     font-size: 1.05rem;
     color: var(--text-secondary);
