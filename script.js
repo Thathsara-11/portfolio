@@ -102,25 +102,252 @@ class ParticleSystem {
     }
 }
 
-// ===== CURSOR GLOW =====
+// ===== CUSTOM CURSOR SYSTEM =====
+const cursorDot = document.getElementById('cursorDot');
+const cursorRing = document.getElementById('cursorRing');
+const cursorTrailCanvas = document.getElementById('cursorTrailCanvas');
 const cursorGlow = document.getElementById('cursorGlow');
-let glowX = 0, glowY = 0, currentGlowX = 0, currentGlowY = 0;
+
+let mouseX = 0, mouseY = 0;
+let dotX = 0, dotY = 0;
+let ringX = 0, ringY = 0;
+let glowX = 0, glowY = 0;
+let currentGlowX = 0, currentGlowY = 0;
+
+// Trail system
+const trailCtx = cursorTrailCanvas ? cursorTrailCanvas.getContext('2d') : null;
+const trailPoints = [];
+const maxTrailPoints = 35;
+let trailHue = 0;
+
+function resizeTrailCanvas() {
+    if (cursorTrailCanvas) {
+        cursorTrailCanvas.width = window.innerWidth;
+        cursorTrailCanvas.height = window.innerHeight;
+    }
+}
+resizeTrailCanvas();
+window.addEventListener('resize', resizeTrailCanvas);
 
 document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
     glowX = e.clientX;
     glowY = e.clientY;
+
+    // Store trail points
+    trailPoints.push({
+        x: e.clientX,
+        y: e.clientY,
+        life: 1.0,
+        hue: trailHue
+    });
+    if (trailPoints.length > maxTrailPoints) {
+        trailPoints.shift();
+    }
+    trailHue = (trailHue + 1.5) % 360;
 });
 
-function updateCursorGlow() {
+// Smooth cursor animation loop
+function animateCursor() {
+    // Dot follows mouse very closely
+    dotX += (mouseX - dotX) * 0.25;
+    dotY += (mouseY - dotY) * 0.25;
+
+    // Ring follows with more lag for a floaty feel
+    ringX += (mouseX - ringX) * 0.12;
+    ringY += (mouseY - ringY) * 0.12;
+
+    // Background glow follows very slowly
     currentGlowX += (glowX - currentGlowX) * 0.08;
     currentGlowY += (glowY - currentGlowY) * 0.08;
+
+    if (cursorDot) {
+        cursorDot.style.left = dotX + 'px';
+        cursorDot.style.top = dotY + 'px';
+    }
+    if (cursorRing) {
+        cursorRing.style.left = ringX + 'px';
+        cursorRing.style.top = ringY + 'px';
+    }
     if (cursorGlow) {
         cursorGlow.style.left = currentGlowX + 'px';
         cursorGlow.style.top = currentGlowY + 'px';
     }
-    requestAnimationFrame(updateCursorGlow);
+
+    // Draw aurora trail
+    if (trailCtx) {
+        trailCtx.clearRect(0, 0, cursorTrailCanvas.width, cursorTrailCanvas.height);
+
+        if (trailPoints.length > 2) {
+            // Decay life
+            for (let i = trailPoints.length - 1; i >= 0; i--) {
+                trailPoints[i].life -= 0.025;
+                if (trailPoints[i].life <= 0) {
+                    trailPoints.splice(i, 1);
+                }
+            }
+
+            // Draw the trail as a gradient line
+            if (trailPoints.length > 2) {
+                for (let i = 1; i < trailPoints.length; i++) {
+                    const p1 = trailPoints[i - 1];
+                    const p2 = trailPoints[i];
+                    const progress = i / trailPoints.length;
+
+                    trailCtx.beginPath();
+                    trailCtx.moveTo(p1.x, p1.y);
+                    trailCtx.lineTo(p2.x, p2.y);
+
+                    const alpha = p2.life * progress * 0.6;
+                    const width = progress * 3;
+                    trailCtx.strokeStyle = `hsla(${p2.hue}, 80%, 65%, ${alpha})`;
+                    trailCtx.lineWidth = width;
+                    trailCtx.lineCap = 'round';
+                    trailCtx.stroke();
+                }
+
+                // Draw a glowing tip at the latest point
+                const lastPt = trailPoints[trailPoints.length - 1];
+                if (lastPt) {
+                    const grd = trailCtx.createRadialGradient(lastPt.x, lastPt.y, 0, lastPt.x, lastPt.y, 15);
+                    grd.addColorStop(0, `hsla(${lastPt.hue}, 90%, 70%, 0.4)`);
+                    grd.addColorStop(1, `hsla(${lastPt.hue}, 90%, 70%, 0)`);
+                    trailCtx.fillStyle = grd;
+                    trailCtx.beginPath();
+                    trailCtx.arc(lastPt.x, lastPt.y, 15, 0, Math.PI * 2);
+                    trailCtx.fill();
+                }
+            }
+        }
+    }
+
+    requestAnimationFrame(animateCursor);
 }
-updateCursorGlow();
+animateCursor();
+
+// ===== CURSOR HOVER DETECTION =====
+const interactiveSelectors = 'a, button, input, textarea, select, .btn, .nav-link, .social-link, .project-card, .cert-card, .leadership-card, .blog-card, .blog-read-more, .nav-toggle, .back-to-top, .tool-tag, .pro-skill-card, .about-card, .contact-info-card, .floating-card, [onclick]';
+
+document.addEventListener('mouseover', (e) => {
+    if (e.target.closest(interactiveSelectors)) {
+        cursorDot?.classList.add('hovering');
+        cursorRing?.classList.add('hovering');
+    }
+});
+
+document.addEventListener('mouseout', (e) => {
+    if (e.target.closest(interactiveSelectors)) {
+        cursorDot?.classList.remove('hovering');
+        cursorRing?.classList.remove('hovering');
+    }
+});
+
+// ===== CLICK BURST ANIMATION =====
+const burstColors = [
+    '#818cf8', '#22d3ee', '#f472b6', '#34d399', '#fbbf24',
+    '#a78bfa', '#fb923c', '#60a5fa', '#fb7185', '#38bdf8'
+];
+
+function createClickBurst(x, y) {
+    const container = document.createElement('div');
+    container.className = 'click-burst';
+    container.style.left = '0px';
+    container.style.top = '0px';
+
+    // Pick a random color palette for this burst
+    const color1 = burstColors[Math.floor(Math.random() * burstColors.length)];
+    const color2 = burstColors[Math.floor(Math.random() * burstColors.length)];
+
+    // Create particles
+    const particleCount = 12;
+    for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'click-burst-particle';
+        const angle = (Math.PI * 2 / particleCount) * i + (Math.random() - 0.5) * 0.5;
+        const distance = 40 + Math.random() * 50;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        const size = 3 + Math.random() * 4;
+        const color = burstColors[Math.floor(Math.random() * burstColors.length)];
+
+        particle.style.cssText = `
+            left: ${x}px;
+            top: ${y}px;
+            width: ${size}px;
+            height: ${size}px;
+            background: ${color};
+            box-shadow: 0 0 6px ${color}, 0 0 12px ${color}40;
+            --tx: ${tx}px;
+            --ty: ${ty}px;
+            animation-duration: ${0.5 + Math.random() * 0.3}s;
+        `;
+        container.appendChild(particle);
+    }
+
+    // Create expanding ring
+    const ring = document.createElement('div');
+    ring.className = 'click-burst-ring';
+    ring.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        border-color: ${color1};
+        box-shadow: 0 0 10px ${color1}60;
+    `;
+    container.appendChild(ring);
+
+    // Create second ring (delayed, larger)
+    const ring2 = document.createElement('div');
+    ring2.className = 'click-burst-ring-2';
+    ring2.style.cssText = `
+        left: ${x}px;
+        top: ${y}px;
+        border-color: ${color2};
+        box-shadow: 0 0 8px ${color2}40;
+    `;
+    container.appendChild(ring2);
+
+    // Create sparkles
+    const sparkleCount = 8;
+    for (let i = 0; i < sparkleCount; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'click-burst-sparkle';
+        const angle = (Math.PI * 2 / sparkleCount) * i;
+        const dist = 20 + Math.random() * 35;
+        const sx = Math.cos(angle) * dist;
+        const sy = Math.sin(angle) * dist;
+        const sColor = burstColors[Math.floor(Math.random() * burstColors.length)];
+
+        sparkle.style.cssText = `
+            left: ${x}px;
+            top: ${y}px;
+            background: ${sColor};
+            box-shadow: 0 0 4px ${sColor};
+            --sx: ${sx}px;
+            --sy: ${sy}px;
+            animation-delay: ${Math.random() * 0.15}s;
+        `;
+        container.appendChild(sparkle);
+    }
+
+    document.body.appendChild(container);
+
+    // Cursor click state
+    cursorDot?.classList.add('clicking');
+    cursorRing?.classList.add('clicking');
+    setTimeout(() => {
+        cursorDot?.classList.remove('clicking');
+        cursorRing?.classList.remove('clicking');
+    }, 200);
+
+    // Clean up
+    setTimeout(() => container.remove(), 1000);
+}
+
+// Attach click burst to entire document
+document.addEventListener('click', (e) => {
+    createClickBurst(e.clientX, e.clientY);
+});
 
 // ===== TEXT SCRAMBLE EFFECT =====
 class TextScramble {
