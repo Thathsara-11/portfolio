@@ -167,8 +167,8 @@ function animateCursor() {
         cursorDot.style.top = dotY + 'px';
     }
     if (cursorRing) {
-        cursorRing.style.left = ringX + 'px';
-        cursorRing.style.top = ringY + 'px';
+        cursorRing.style.left = (ringX + 10) + 'px';
+        cursorRing.style.top = (ringY + 10) + 'px';
     }
     if (cursorGlow) {
         cursorGlow.style.left = currentGlowX + 'px';
@@ -716,6 +716,223 @@ window.addEventListener('scroll', () => {
     });
 });
 
+// ===== SCROLL SHAPES BACKGROUND ANIMATION =====
+class ScrollShapesSystem {
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.shapes = [];
+        this.lastScrollY = 0;
+        this.scrollVelocity = 0;
+        this.hue = 0;
+        this.frameCount = 0;
+
+        this.colors = [
+            { r: 129, g: 140, b: 248 },  // indigo
+            { r: 34,  g: 211, b: 238 },  // cyan
+            { r: 167, g: 139, b: 250 },  // violet
+            { r: 52,  g: 211, b: 153 },  // emerald
+            { r: 251, g: 113, b: 133 },  // rose
+            { r: 251, g: 191, b: 36  },  // amber
+            { r: 244, g: 114, b: 182 },  // pink
+            { r: 96,  g: 165, b: 250 },  // blue
+            { r: 56,  g: 189, b: 248 },  // sky
+        ];
+
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+        window.addEventListener('scroll', () => this.onScroll());
+        this.animate();
+    }
+
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+
+    onScroll() {
+        const currentScroll = window.scrollY;
+        this.scrollVelocity = Math.abs(currentScroll - this.lastScrollY);
+        this.lastScrollY = currentScroll;
+
+        // Spawn shapes based on scroll speed
+        const shapesToSpawn = Math.min(Math.floor(this.scrollVelocity / 8), 4);
+        for (let i = 0; i < shapesToSpawn; i++) {
+            this.spawnShape();
+        }
+    }
+
+    spawnShape() {
+        if (this.shapes.length > 60) return; // performance cap
+
+        const color = this.colors[Math.floor(Math.random() * this.colors.length)];
+        const shapeTypes = ['triangle', 'hexagon', 'diamond', 'circle', 'ring', 'cross', 'star'];
+
+        this.shapes.push({
+            x: Math.random() * this.canvas.width,
+            y: this.canvas.height + 20,
+            size: 6 + Math.random() * 18,
+            speedY: -(1.2 + Math.random() * 2.5),
+            speedX: (Math.random() - 0.5) * 1.2,
+            rotation: Math.random() * Math.PI * 2,
+            rotationSpeed: (Math.random() - 0.5) * 0.03,
+            opacity: 0,
+            maxOpacity: 0.15 + Math.random() * 0.25,
+            fadeIn: true,
+            life: 1.0,
+            color: color,
+            type: shapeTypes[Math.floor(Math.random() * shapeTypes.length)],
+            wobbleOffset: Math.random() * Math.PI * 2,
+            wobbleSpeed: 0.01 + Math.random() * 0.02,
+            wobbleAmount: 0.3 + Math.random() * 0.8
+        });
+    }
+
+    drawShape(ctx, shape) {
+        const { x, y, size, rotation, type, color, opacity } = shape;
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(rotation);
+        ctx.globalAlpha = opacity;
+
+        const r = color.r, g = color.g, b = color.b;
+
+        switch (type) {
+            case 'triangle':
+                ctx.beginPath();
+                ctx.moveTo(0, -size);
+                ctx.lineTo(size * 0.866, size * 0.5);
+                ctx.lineTo(-size * 0.866, size * 0.5);
+                ctx.closePath();
+                ctx.strokeStyle = `rgba(${r},${g},${b},${opacity})`;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                break;
+
+            case 'hexagon':
+                ctx.beginPath();
+                for (let i = 0; i < 6; i++) {
+                    const angle = (Math.PI / 3) * i - Math.PI / 6;
+                    const hx = Math.cos(angle) * size;
+                    const hy = Math.sin(angle) * size;
+                    if (i === 0) ctx.moveTo(hx, hy);
+                    else ctx.lineTo(hx, hy);
+                }
+                ctx.closePath();
+                ctx.strokeStyle = `rgba(${r},${g},${b},${opacity})`;
+                ctx.lineWidth = 1.2;
+                ctx.stroke();
+                break;
+
+            case 'diamond':
+                ctx.beginPath();
+                ctx.moveTo(0, -size);
+                ctx.lineTo(size * 0.6, 0);
+                ctx.lineTo(0, size);
+                ctx.lineTo(-size * 0.6, 0);
+                ctx.closePath();
+                ctx.fillStyle = `rgba(${r},${g},${b},${opacity * 0.4})`;
+                ctx.fill();
+                ctx.strokeStyle = `rgba(${r},${g},${b},${opacity})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                break;
+
+            case 'circle':
+                ctx.beginPath();
+                ctx.arc(0, 0, size * 0.6, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${r},${g},${b},${opacity * 0.3})`;
+                ctx.fill();
+                break;
+
+            case 'ring':
+                ctx.beginPath();
+                ctx.arc(0, 0, size * 0.7, 0, Math.PI * 2);
+                ctx.strokeStyle = `rgba(${r},${g},${b},${opacity})`;
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                break;
+
+            case 'cross':
+                ctx.strokeStyle = `rgba(${r},${g},${b},${opacity})`;
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(-size * 0.5, 0);
+                ctx.lineTo(size * 0.5, 0);
+                ctx.moveTo(0, -size * 0.5);
+                ctx.lineTo(0, size * 0.5);
+                ctx.stroke();
+                break;
+
+            case 'star':
+                ctx.beginPath();
+                for (let i = 0; i < 5; i++) {
+                    const outerAngle = (Math.PI * 2 / 5) * i - Math.PI / 2;
+                    const innerAngle = outerAngle + Math.PI / 5;
+                    const ox = Math.cos(outerAngle) * size;
+                    const oy = Math.sin(outerAngle) * size;
+                    const ix = Math.cos(innerAngle) * size * 0.4;
+                    const iy = Math.sin(innerAngle) * size * 0.4;
+                    if (i === 0) ctx.moveTo(ox, oy);
+                    else ctx.lineTo(ox, oy);
+                    ctx.lineTo(ix, iy);
+                }
+                ctx.closePath();
+                ctx.strokeStyle = `rgba(${r},${g},${b},${opacity})`;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                break;
+        }
+
+        ctx.restore();
+    }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.frameCount++;
+
+        // Also spawn shapes slowly even without scrolling for ambient effect
+        if (this.frameCount % 90 === 0 && this.shapes.length < 20) {
+            this.spawnShape();
+        }
+
+        for (let i = this.shapes.length - 1; i >= 0; i--) {
+            const s = this.shapes[i];
+
+            // Wobble horizontally
+            s.wobbleOffset += s.wobbleSpeed;
+            s.x += s.speedX + Math.sin(s.wobbleOffset) * s.wobbleAmount;
+            s.y += s.speedY;
+            s.rotation += s.rotationSpeed;
+
+            // Fade in
+            if (s.fadeIn) {
+                s.opacity += 0.008;
+                if (s.opacity >= s.maxOpacity) {
+                    s.opacity = s.maxOpacity;
+                    s.fadeIn = false;
+                }
+            }
+
+            // Decay life as shape rises
+            s.life -= 0.002;
+            if (s.y < -50 || s.life <= 0) {
+                s.opacity -= 0.01;
+            }
+
+            // Remove dead shapes
+            if (s.opacity <= 0 || s.y < -100) {
+                this.shapes.splice(i, 1);
+                continue;
+            }
+
+            this.drawShape(this.ctx, s);
+        }
+
+        requestAnimationFrame(() => this.animate());
+    }
+}
+
 // ===== TEXT SCRAMBLE ON HOVER (Nav Logo) =====
 const navLogo = document.querySelector('.nav-logo');
 if (navLogo) {
@@ -786,6 +1003,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Init blog modal
     initBlogModal();
 
+    // Init scroll shapes
+    const scrollShapesCanvas = document.getElementById('scrollShapesCanvas');
+    if (scrollShapesCanvas) {
+        new ScrollShapesSystem(scrollShapesCanvas);
+    }
+
     // Preloader fade
     document.body.style.opacity = '0';
     document.body.style.transition = 'opacity 0.5s ease';
@@ -822,7 +1045,8 @@ const blogDetails = {
             "Additionally, I've studied Information Security to ensure secure application development, and completed a Research Project applying these concepts to real-world problems."
         ],
         skills: ['Object-Oriented Programming', 'Full-Stack Web Development', 'Database Design', 'System Architecture', 'Software Engineering', 'Cybersecurity', 'Problem-Solving'],
-        tags: ['Programming', 'Software Development', 'Web Design', 'Database Management', 'System Design']
+        tags: ['Programming', 'Software Development', 'Web Design', 'Database Management', 'System Design'],
+        accentColor: '#818cf8'
     },
     math: {
         category: 'Mathematics',
@@ -836,10 +1060,11 @@ const blogDetails = {
             "I've applied these skills in Operations Research I & II, learning optimization techniques essential for business and engineering decisions. Graph Theory enhanced my understanding of network problems and algorithms, while Introduction to MATLAB enabled me to implement mathematical solutions computationally."
         ],
         skills: ['Mathematical Modeling', 'Linear Algebra', 'Computational Methods', 'Data Analysis', 'Optimization', 'Algorithm Design', 'Problem-Solving'],
-        tags: ['Mathematics', 'Data Analysis', 'Optimization', 'Computational Methods', 'MATLAB', 'Algorithms']
+        tags: ['Mathematics', 'Data Analysis', 'Optimization', 'Computational Methods', 'MATLAB', 'Algorithms'],
+        accentColor: '#a78bfa'
     },
     stats: {
-        category: 'Statistics & Data Science',
+        category: 'Statistics',
         title: 'Statistics: Turning Data Into Insights for Data-Driven Decision Making',
         date: 'June 15, 2026',
         readTime: '3 min read',
@@ -850,7 +1075,8 @@ const blogDetails = {
             "Advanced topics like Applied Nonparametric Statistics and Statistical Learning prepared me for modern data science challenges where traditional assumptions may not hold. These courses directly apply to machine learning and data prediction projects."
         ],
         skills: ['Data Analysis', 'Statistical Modeling', 'Probability Theory', 'Regression Analysis', 'Hypothesis Testing', 'Python/R Programming', 'Data Visualization', 'Machine Learning Fundamentals'],
-        tags: ['Statistics', 'Data Science', 'Data Analysis', 'Python', 'Machine Learning', 'Probability', 'Experimental Design']
+        tags: ['Statistics', 'Data Science', 'Data Analysis', 'Python', 'Machine Learning', 'Probability', 'Experimental Design'],
+        accentColor: '#22d3ee'
     }
 };
 
@@ -869,10 +1095,117 @@ function initBlogModal() {
     const modalBody = document.getElementById('blogModalBody');
     const modalSkills = document.getElementById('blogModalSkills');
     const modalTags = document.getElementById('blogModalTags');
+    const modalContent = modal.querySelector('.blog-modal-content');
+    const modalMeta = modal.querySelector('.blog-modal-meta');
+    const modalFooterSections = modal.querySelectorAll('.blog-modal-section');
+
+    // Color palettes for modal particles
+    const particleColors = [
+        '#818cf8', '#22d3ee', '#f472b6', '#34d399', '#fbbf24',
+        '#a78bfa', '#fb923c', '#60a5fa'
+    ];
+
+    function spawnModalParticles(accentColor) {
+        const header = modal.querySelector('.blog-modal-header');
+        if (!header) return;
+
+        // Remove old particles
+        header.querySelectorAll('.blog-modal-particle').forEach(p => p.remove());
+
+        const count = 15;
+        for (let i = 0; i < count; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'blog-modal-particle';
+            const size = 3 + Math.random() * 5;
+            const px = (Math.random() - 0.5) * 200;
+            const py = -30 - Math.random() * 60;
+            const color = Math.random() > 0.5 ? accentColor : particleColors[Math.floor(Math.random() * particleColors.length)];
+            const delay = Math.random() * 0.5;
+            const duration = 1.2 + Math.random() * 0.8;
+
+            particle.style.cssText = `
+                width: ${size}px;
+                height: ${size}px;
+                background: ${color};
+                box-shadow: 0 0 ${size * 2}px ${color}80;
+                left: ${30 + Math.random() * 60}%;
+                bottom: ${10 + Math.random() * 30}%;
+                --px: ${px}px;
+                --py: ${py}px;
+                animation: modal-particle-float ${duration}s ease-out ${delay}s forwards;
+            `;
+            header.appendChild(particle);
+        }
+    }
+
+    function resetAnimationClasses() {
+        // Reset all animated elements
+        modalCategory.classList.remove('animate-in');
+        modalTitle.classList.remove('animate-in');
+        if (modalMeta) modalMeta.classList.remove('animate-in');
+
+        modalBody.querySelectorAll('p').forEach(p => p.classList.remove('animate-in'));
+
+        modalFooterSections.forEach(s => s.classList.remove('animate-in'));
+
+        modalSkills.querySelectorAll('span').forEach(s => s.classList.remove('animate-in'));
+        modalTags.querySelectorAll('span').forEach(s => s.classList.remove('animate-in'));
+    }
+
+    function animateModalContent(data) {
+        let delay = 250; // Start after modal container finishes entrance
+        const step = 100; // Delay between each element
+
+        // 1. Category badge - slides from left
+        setTimeout(() => modalCategory.classList.add('animate-in'), delay);
+        delay += step;
+
+        // 2. Title - scales up
+        setTimeout(() => modalTitle.classList.add('animate-in'), delay);
+        delay += step + 50;
+
+        // 3. Meta info
+        if (modalMeta) {
+            setTimeout(() => modalMeta.classList.add('animate-in'), delay);
+        }
+        delay += step;
+
+        // 4. Spawn header particles
+        setTimeout(() => spawnModalParticles(data.accentColor || '#818cf8'), delay);
+
+        // 5. Body paragraphs - cascade one by one
+        const paragraphs = modalBody.querySelectorAll('p');
+        paragraphs.forEach((p, i) => {
+            setTimeout(() => p.classList.add('animate-in'), delay + (i * (step + 30)));
+        });
+        delay += paragraphs.length * (step + 30);
+
+        // 6. Footer sections
+        modalFooterSections.forEach((section, i) => {
+            setTimeout(() => section.classList.add('animate-in'), delay + (i * step));
+        });
+        delay += modalFooterSections.length * step;
+
+        // 7. Skill chips pop in one by one
+        const skillSpans = modalSkills.querySelectorAll('span');
+        skillSpans.forEach((span, i) => {
+            setTimeout(() => span.classList.add('animate-in'), delay + (i * 60));
+        });
+
+        // 8. Tag chips pop in one by one (slight offset from skills)
+        const tagSpans = modalTags.querySelectorAll('span');
+        tagSpans.forEach((span, i) => {
+            setTimeout(() => span.classList.add('animate-in'), delay + 100 + (i * 60));
+        });
+    }
 
     function openModal(blogId) {
         const data = blogDetails[blogId];
         if (!data) return;
+
+        // Reset animations
+        resetAnimationClasses();
+        modal.classList.remove('closing');
 
         // Populate text content
         modalCategory.textContent = data.category;
@@ -889,14 +1222,30 @@ function initBlogModal() {
         // Populate tag elements
         modalTags.innerHTML = data.tags.map(t => `<span>#${t}</span>`).join('');
 
+        // Scroll modal content to top
+        if (modalContent) modalContent.scrollTop = 0;
+
         // Show modal and disable body scroll
         modal.classList.add('active');
         document.body.style.overflow = 'hidden';
+
+        // Trigger staggered animations
+        requestAnimationFrame(() => {
+            animateModalContent(data);
+        });
     }
 
     function closeModal() {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
+        // Add closing animation class
+        modal.classList.add('closing');
+
+        // Wait for closing animation to finish, then actually hide
+        setTimeout(() => {
+            modal.classList.remove('active');
+            modal.classList.remove('closing');
+            document.body.style.overflow = '';
+            resetAnimationClasses();
+        }, 450);
     }
 
     // Event listeners

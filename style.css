@@ -108,38 +108,73 @@ ul {
 /* ===== CUSTOM CURSOR SYSTEM ===== */
 .custom-cursor-dot {
     position: fixed;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: white;
+    width: 28px;
+    height: 28px;
     pointer-events: none;
     z-index: 10001;
-    transform: translate(-50%, -50%);
-    transition: width 0.2s ease, height 0.2s ease, background 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 0 10px rgba(129, 140, 248, 0.8), 0 0 20px rgba(129, 140, 248, 0.4);
-    mix-blend-mode: difference;
+    transform: translate(-3px, -2px);
+    transition: filter 0.3s ease;
+    filter: drop-shadow(0 0 6px rgba(129, 140, 248, 0.6)) drop-shadow(0 0 12px rgba(129, 140, 248, 0.3));
 }
 
+.cursor-arrow-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    animation: cursor-arrow-bob 2.5s ease-in-out infinite, cursor-arrow-gradient 4s ease infinite;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;
+}
+
+/* Arrow bob animation */
+@keyframes cursor-arrow-bob {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-1.5px) rotate(-1deg); }
+    75% { transform: translateY(1.5px) rotate(1deg); }
+}
+
+/* SVG gradient color cycling */
+@keyframes cursor-arrow-gradient {
+    0% { filter: hue-rotate(0deg); }
+    50% { filter: hue-rotate(40deg); }
+    100% { filter: hue-rotate(0deg); }
+}
+
+/* Hover state - grow and glow cyan */
 .custom-cursor-dot.hovering {
-    width: 6px;
-    height: 6px;
-    background: var(--accent-cyan);
-    box-shadow: 0 0 15px rgba(34, 211, 238, 1), 0 0 30px rgba(34, 211, 238, 0.6), 0 0 45px rgba(34, 211, 238, 0.3);
+    filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.9)) 
+            drop-shadow(0 0 20px rgba(34, 211, 238, 0.5))
+            drop-shadow(0 0 35px rgba(34, 211, 238, 0.25));
 }
 
+.custom-cursor-dot.hovering .cursor-arrow-svg {
+    transform: scale(1.15) rotate(-5deg);
+    animation: cursor-arrow-hover-pulse 1s ease-in-out infinite, cursor-arrow-gradient 3s ease infinite;
+}
+
+@keyframes cursor-arrow-hover-pulse {
+    0%, 100% { transform: scale(1.15) rotate(-5deg); }
+    50% { transform: scale(1.25) rotate(-3deg); }
+}
+
+/* Click state - squish and flash */
 .custom-cursor-dot.clicking {
-    width: 4px;
-    height: 4px;
-    background: var(--accent-rose);
-    box-shadow: 0 0 20px rgba(251, 113, 133, 1), 0 0 40px rgba(251, 113, 133, 0.6);
+    filter: drop-shadow(0 0 12px rgba(251, 113, 133, 1)) 
+            drop-shadow(0 0 25px rgba(251, 113, 133, 0.6));
 }
 
+.custom-cursor-dot.clicking .cursor-arrow-svg {
+    transform: scale(0.8) rotate(8deg);
+    animation: none;
+    transition: transform 0.1s ease;
+}
+
+/* Outer ring */
 .custom-cursor-ring {
     position: fixed;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    border: 1.5px solid rgba(129, 140, 248, 0.5);
+    border: 1.5px solid rgba(129, 140, 248, 0.35);
     pointer-events: none;
     z-index: 10000;
     transform: translate(-50%, -50%);
@@ -148,20 +183,40 @@ ul {
                 border-color 0.3s ease,
                 background 0.3s ease,
                 opacity 0.3s ease;
+    animation: cursor-ring-rotate 8s linear infinite;
+}
+
+@keyframes cursor-ring-rotate {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Dashed ring with gradient */
+.custom-cursor-ring {
+    border-style: dashed;
+    border-width: 1.5px;
 }
 
 .custom-cursor-ring.hovering {
-    width: 60px;
-    height: 60px;
-    border-color: rgba(34, 211, 238, 0.4);
-    background: rgba(34, 211, 238, 0.06);
+    width: 64px;
+    height: 64px;
+    border-color: rgba(34, 211, 238, 0.5);
+    background: rgba(34, 211, 238, 0.04);
+    border-style: solid;
+    animation: cursor-ring-hover-spin 3s linear infinite;
+}
+
+@keyframes cursor-ring-hover-spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .custom-cursor-ring.clicking {
-    width: 24px;
-    height: 24px;
-    border-color: rgba(251, 113, 133, 0.6);
-    background: rgba(251, 113, 133, 0.08);
+    width: 20px;
+    height: 20px;
+    border-color: rgba(251, 113, 133, 0.7);
+    background: rgba(251, 113, 133, 0.1);
+    border-style: solid;
 }
 
 /* Cursor trail canvas */
@@ -271,6 +326,17 @@ ul {
 
 /* ===== PARTICLE CANVAS ===== */
 #particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ===== SCROLL SHAPES CANVAS ===== */
+#scrollShapesCanvas {
     position: fixed;
     top: 0;
     left: 0;
@@ -2625,8 +2691,8 @@ ul {
     justify-content: center;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.4s ease, visibility 0.4s ease;
     padding: 1.5rem;
+    perspective: 1200px;
 }
 
 .blog-modal.active {
@@ -2634,34 +2700,92 @@ ul {
     visibility: visible;
 }
 
+/* Overlay with radial reveal */
 .blog-modal-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(5, 5, 16, 0.85);
-    backdrop-filter: blur(12px);
+    background: rgba(5, 5, 16, 0.9);
+    backdrop-filter: blur(16px);
+    opacity: 0;
+    transition: opacity 0.5s ease;
 }
 
+.blog-modal.active .blog-modal-overlay {
+    opacity: 1;
+}
+
+/* Closing state */
+.blog-modal.closing .blog-modal-overlay {
+    opacity: 0;
+    transition: opacity 0.4s ease 0.15s;
+}
+
+/* Modal content with 3D entrance */
 .blog-modal-content {
     position: relative;
     width: 100%;
     max-width: 750px;
     max-height: 85vh;
     background: rgba(10, 10, 30, 0.95);
-    border: 1.5px solid var(--border-glass);
+    border: 1.5px solid transparent;
     border-radius: var(--radius-lg);
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), var(--shadow-glow);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     z-index: 1;
     overflow-y: auto;
+    overflow-x: hidden;
     padding: 2.5rem;
-    transform: scale(0.9);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     scrollbar-width: thin;
+
+    /* Entry animation */
+    opacity: 0;
+    transform: translateY(60px) rotateX(8deg) scale(0.92);
+    transition: opacity 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+                transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.55s ease;
+}
+
+/* Animated glowing border */
+.blog-modal-content::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: var(--radius-lg);
+    padding: 1.5px;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-cyan), var(--accent-rose), var(--accent-emerald), var(--accent-primary));
+    background-size: 400% 400%;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.6s ease 0.3s;
+    animation: gradient-shift 4s ease infinite;
+    z-index: -1;
 }
 
 .blog-modal.active .blog-modal-content {
-    transform: scale(1);
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg) scale(1);
+    box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.6), 0 0 40px rgba(99, 102, 241, 0.1);
 }
 
+.blog-modal.active .blog-modal-content::before {
+    opacity: 1;
+}
+
+/* Closing state for content */
+.blog-modal.closing .blog-modal-content {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.blog-modal.closing .blog-modal-content::before {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+/* Close button */
 .blog-modal-close {
     position: absolute;
     top: 1.5rem;
@@ -2678,24 +2802,65 @@ ul {
     font-size: 1.1rem;
     cursor: pointer;
     transition: var(--transition-base);
+    z-index: 10;
+    opacity: 0;
+    transform: rotate(-90deg) scale(0.5);
+}
+
+.blog-modal.active .blog-modal-close {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+    transition: opacity 0.4s ease 0.5s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.5s,
+                background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .blog-modal-close:hover {
     background: var(--accent-rose);
     color: white;
     border-color: var(--accent-rose);
-    transform: rotate(90deg);
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 0 20px rgba(251, 113, 133, 0.4);
 }
 
+/* Modal header */
 .blog-modal-header {
     margin-bottom: 2rem;
     border-bottom: 1px solid var(--border-glass);
     padding-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
 }
 
+/* Decorative header shimmer line */
+.blog-modal-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-primary), var(--accent-cyan), var(--accent-rose), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+}
+
+/* Staggered animation classes */
+.blog-modal-animate {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.blog-modal-animate.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Category badge entrance - slides from left */
 .blog-modal-category {
     display: inline-block;
-    padding: 0.3rem 0.8rem;
+    padding: 0.4rem 1rem;
     background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(244, 114, 182, 0.1));
     border: 1px solid rgba(99, 102, 241, 0.3);
     border-radius: var(--radius-full);
@@ -2703,8 +2868,23 @@ ul {
     color: var(--accent-primary);
     font-weight: 600;
     margin-bottom: 0.8rem;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
+.blog-modal-category.animate-in {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.blog-modal-category:hover {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+}
+
+/* Title entrance - fades up with scale */
 .blog-modal-title {
     font-size: 1.8rem;
     font-weight: 800;
@@ -2716,11 +2896,28 @@ ul {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+    transition: opacity 0.5s ease, transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
+.blog-modal-title.animate-in {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* Meta entrance */
 .blog-modal-meta {
     display: flex;
     gap: 1.5rem;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.blog-modal-meta.animate-in {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .blog-modal-meta span {
@@ -2735,6 +2932,7 @@ ul {
     color: var(--accent-cyan);
 }
 
+/* Body section */
 .blog-modal-body {
     color: var(--text-secondary);
     font-size: 1rem;
@@ -2742,20 +2940,68 @@ ul {
     margin-bottom: 2.5rem;
 }
 
+/* Each paragraph animates in individually */
 .blog-modal-body p {
     margin-bottom: 1.2rem;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    padding-left: 0;
+}
+
+.blog-modal-body p.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Decorative left accent on first paragraph */
+.blog-modal-body p:first-child {
+    padding-left: 1rem;
+    border-left: 3px solid transparent;
+}
+
+.blog-modal-body p:first-child.animate-in {
+    border-left-color: var(--accent-primary);
+    transition: opacity 0.45s ease, transform 0.45s ease, border-left-color 0.6s ease 0.3s;
 }
 
 .blog-modal-body p:last-child {
     margin-bottom: 0;
 }
 
+/* Footer */
 .blog-modal-footer {
     border-top: 1px solid var(--border-glass);
     padding-top: 2rem;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
+    position: relative;
+}
+
+/* Footer shimmer top line */
+.blog-modal-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-emerald), var(--accent-cyan), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 3s linear infinite;
+}
+
+.blog-modal-section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.blog-modal-section.animate-in {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .blog-modal-section h4 {
@@ -2774,6 +3020,7 @@ ul {
     gap: 0.5rem;
 }
 
+/* Skill and tag chips with staggered pop-in */
 .blog-modal-skills span,
 .blog-modal-tags span {
     padding: 0.3rem 0.8rem;
@@ -2782,17 +3029,56 @@ ul {
     border-radius: var(--radius-full);
     font-size: 0.78rem;
     color: var(--text-secondary);
-    transition: var(--transition-base);
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: scale(0.7) translateY(10px);
+}
+
+.blog-modal-skills span.animate-in,
+.blog-modal-tags span.animate-in {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+                border-color 0.3s ease, color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
 }
 
 .blog-modal-skills span:hover {
     border-color: var(--accent-emerald);
     color: var(--accent-emerald);
+    background: rgba(52, 211, 153, 0.08);
+    box-shadow: 0 0 12px rgba(52, 211, 153, 0.15);
+    transform: scale(1.05) translateY(-2px);
 }
 
 .blog-modal-tags span:hover {
     border-color: var(--accent-cyan);
     color: var(--accent-cyan);
+    background: rgba(34, 211, 238, 0.08);
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.15);
+    transform: scale(1.05) translateY(-2px);
+}
+
+/* Floating modal particles */
+.blog-modal-particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes modal-particle-float {
+    0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        transform: translate(var(--px), var(--py)) scale(0);
+        opacity: 0;
+    }
 }
 
 @media (max-width: 768px) {
